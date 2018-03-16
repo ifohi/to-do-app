@@ -2,9 +2,11 @@ function onReady() {
   const addToDoForm = document.getElementById('addToDoForm');
   const newToDoText = document.getElementById('newToDoText');
   const toDoList = document.getElementById('toDoList');
+  const deleteToDo = document.getElementById('deleteToDo');
 
   addToDoForm.addEventListener('submit', () => {
     event.preventDefault();
+
 
     // get the text
     let title = newToDoText.value;
@@ -29,9 +31,16 @@ function onReady() {
 
     // empty the input
     newToDoText.value = '';
+
+    // delete the input
+    deleteToDo.addEventListener('submit', () => {
+      event.preventDefault();
+    })
   });
 }
 
+// event that detects the page load
 window.onload = function() {
+  alert("The window has loaded!");
   onReady();
-};
+ };
