@@ -3,20 +3,46 @@
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>To-Do App</title>
+    <!-- Material Design Lite -->
+   <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.purple-pink.min.css">
+   <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+   <!-- Custom Styles -->
+   <link rel="stylesheet" href="styles/main.css">
   </head>
   <body>
-    <h1>To-Do App</h1>
 
-    <form id="addToDoForm">
-      <label for="newToDoText">New To-Do:</label>
-      <input type="text" id="newToDoText">
-      <button type="submit">Add To-Do!</button>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header header-custom">
+        <div class="mdl-layout__header-row header-custom">
+          <span class="mdl-layout-title">To Do App</span>
+        </div>
+      </header>
+    <!-- container grid -->
+    <div class="mdl-grid">
+
+    <!-- add the input text and button -->
+
+    <div class="mainContent">
+      <form class="mdl-grid form-custom" id="addToDoForm">
+        <div class="mdl-cell mdl-cell--9-col mdl-cell--5-col-tablet mdl-cell--3-col-phone mdl-cell--middle mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input" type="text" id="newToDoText">
+          <label class="mdl-textfield__label" for="newToDoText">New To Do:</label>
+        </div>
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--3-col-tablet mdl-cell--1-col-phone mdl-cell--middle button-custom">
+      <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Add To-Do!</button>
     </form>
+    </div>
+    <!-- add list of the users' to dos -->
+    <ul class='mdl-list' id="toDoList">
 
-    <ul id="toDoList">
     </ul>
 
-  <script src="app.js"></script>
+    <form id="deleteToDo">
+      <button class="mdl-button mdl-js-button mdl-button--primary" type="submit">Delete</button>
+    </form>
 
+    <!-- link to javascript file -->
+    <script src="app.js"></script>
   </body>
 </html>
