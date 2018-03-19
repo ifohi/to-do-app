@@ -1,46 +1,87 @@
 function onReady() {
-  const addToDoForm = document.getElementById('addToDoForm');
-  const newToDoText = document.getElementById('newToDoText');
-  const toDoList = document.getElementById('toDoList');
-  const deleteToDo = document.getElementById('deleteToDo');
-
-  addToDoForm.addEventListener('submit', () => {
-    event.preventDefault();
+    const toDos = []; // state is an array of to-dos
+    const addToDoForm = document.getElementById('addToDoForm'); // used to call the createNewToDo() function
+    let id = 0;
+    const submitButton = document.getElementById('submitButton');
 
 
-    // get the text
-    let title = newToDoText.value;
+    function renderTheUI() {
+        const toDoList = document.getElementById('toDoList'); // access <ul> in HTML
 
-    // create a new li
-    let newLi = document.createElement('li');
+        toDoList.textContent = ''; // set newLi to new string before forEach function
 
-    // create a new input
-    let checkbox = document.createElement('input');
+        toDos.forEach(function(toDo) { // applies each function to each item in array - render each to-do as a li in the ul
+            const newLi = document.createElement('li'); // creating the li
+            const checkbox = document.createElement('input'); // creating checkbox
+            checkbox.type = "checkbox";
 
-    // set the input's type to checkbox
-    checkbox.type = "checkbox";
+            newLi.textContent = toDo.title; // adds the toDo's title text next to newLi
 
-    // set the title
-    newLi.textContent = title;
+            toDoList.appendChild(newLi); // updates the DOM
+            newLi.appendChild(checkbox); // updates the DOM
+        });
+    }
 
-    // attach the checkbox to the li
-    newLi.appendChild(checkbox);
+    function createNewToDo() { // change state by adding new to-dos. this function updates array of to-dos
+        const newToDoText = document.getElementById('newToDoText'); //access the text input
+        const deleteButton = document.createElement('deleteButton');
+        if (!newToDoText.value) {
+            return; // prevents from submitting empty to-dos
+        }
 
-    // attach the li to the ul
-    toDoList.appendChild(newLi);
+        toDos.push({ //add new to-do to the toDos array by using push()
+            title: newToDoText.value,
+            complete: false,
+            id: ++id
+        });
+        newToDoText.value = ''; //clear text field for user
+    }
 
-    // empty the input
-    newToDoText.value = '';
+    function renderTheUI() {
+        const toDoList = document.getElementById('toDoList'); // call renderTheUI each time state changes (adds a new to-do)
+        toDoList.textContent = '';
 
-    // delete the input
-    deleteToDo.addEventListener('submit', () => {
-      event.preventDefault();
-    })
-  });
+        toDos.forEach(function(toDo) {
+            const newLi = document.createElement('li'); // creates new li
+            const checkbox = document.createElement('input'); // to-dos title text next to li
+            const deleteButton = document.createElement('input'); // text input linked to "delete" text
+
+            checkbox.type = "checkbox";
+
+
+            newLi.textContent = toDo.title;
+            toDoList.appendChild(newLi);
+            newLi.appendChild(checkbox);
+
+
+            deleteButton.addEventListener('click', event => {
+                event.preventDefault();
+
+                toDoList.removeChild(newLi) // deletes html elements
+
+                //todos.filter
+                const toRemoveId = toDo.id;
+                const filteredTodos = toDos.filter(toDo => toDo.id !== toRemoveId);
+                todos = filteredTodos; // new array after deletion
+
+            });
+
+        });
+
+    }
+
+    addToDoForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        createNewToDo();
+        newToDoText = '';
+        renderTheUI();
+    });
+
+    renderTheUI();
+
 }
 
 // event that detects the page load
 window.onload = function() {
-  alert("The window has loaded!");
-  onReady();
- };
+    onReady();
+};
