@@ -11,8 +11,8 @@ function onReady() {
         toDoList.textContent = ''; // set newLi to new string before forEach function
 
         toDos.forEach(function(toDo) { // applies each function to each item in array - render each to-do as a li in the ul
-            const newLi = document.createElement('li'); // creating the li
-            const checkbox = document.createElement('input'); // creating checkbox
+            const newLi = document.createElement('li'); // creates the li
+            const checkbox = document.createElement('input'); // creates checkbox
             checkbox.type = "checkbox";
 
             newLi.textContent = toDo.title; // adds the toDo's title text next to newLi
@@ -26,7 +26,7 @@ function onReady() {
         const newToDoText = document.getElementById('newToDoText'); //access the text input
         const deleteButton = document.createElement('deleteButton');
         if (!newToDoText.value) {
-            return; // prevents from submitting empty to-dos
+            return; // prevents submitting empty to-dos
         }
 
         toDos.push({ //add new to-do to the toDos array by using push()
@@ -45,6 +45,7 @@ function onReady() {
             const newLi = document.createElement('li'); // creates new li
             const checkbox = document.createElement('input'); // to-dos title text next to li
             const deleteButton = document.createElement('input'); // text input linked to "delete" text
+
 
             checkbox.type = "checkbox";
 
@@ -70,7 +71,7 @@ function onReady() {
 
     }
 
-    addToDoForm.addEventListener('submit', function(event) {
+    addToDoForm.addEventListener('submit', function(event) { 
         event.preventDefault();
         createNewToDo();
         newToDoText = '';
