@@ -1,30 +1,12 @@
 function onReady() {
-    const toDos = []; // state is an array of to-dos
+    let toDos = []; // state is an array of to-dos
     const addToDoForm = document.getElementById('addToDoForm'); // used to call the createNewToDo() function
     let id = 0;
     const submitButton = document.getElementById('submitButton');
 
-
-    function renderTheUI() {
-        const toDoList = document.getElementById('toDoList'); // access <ul> in HTML
-
-        toDoList.textContent = ''; // set newLi to new string before forEach function
-
-        toDos.forEach(function(toDo) { // applies each function to each item in array - render each to-do as a li in the ul
-            const newLi = document.createElement('li'); // creates the li
-            const checkbox = document.createElement('input'); // creates checkbox
-            checkbox.type = "checkbox";
-
-            newLi.textContent = toDo.title; // adds the toDo's title text next to newLi
-
-            toDoList.appendChild(newLi); // updates the DOM
-            newLi.appendChild(checkbox); // updates the DOM
-        });
-    }
-
     function createNewToDo() { // change state by adding new to-dos. this function updates array of to-dos
-        const newToDoText = document.getElementById('newToDoText'); //access the text input
-        const deleteButton = document.createElement('deleteButton');
+        let newToDoText = document.getElementById('newToDoText'); //access the text input
+        let deleteButton = document.createElement('deleteButton');
         if (!newToDoText.value) {
             return; // prevents submitting empty to-dos
         }
@@ -37,41 +19,39 @@ function onReady() {
         newToDoText.value = ''; //clear text field for user
     }
 
+    // Delete to-do item
+    function deleteToDo(id) {
+      toDos = toDos.filter(item => item.id !== id);
+    }
+
     function renderTheUI() {
-        const toDoList = document.getElementById('toDoList'); // call renderTheUI each time state changes (adds a new to-do)
-        toDoList.textContent = '';
+        let toDoList = document.getElementById('toDoList'); // access <ul> in HTML
 
-        toDos.forEach(function(toDo) {
-            const newLi = document.createElement('li'); // creates new li
-            const checkbox = document.createElement('input'); // to-dos title text next to li
-            const deleteButton = document.createElement('input'); // text input linked to "delete" text
+        toDoList.textContent = ''; // set newLi to new string before forEach function
 
-
+        toDos.forEach(function(toDo) { // applies each function to each item in array - render each to-do as a li in the ul
+            let newLi = document.createElement('li'); // creates the li
+            let checkbox = document.createElement('input'); // creates checkbox
             checkbox.type = "checkbox";
 
 
-            newLi.textContent = toDo.title;
-            toDoList.appendChild(newLi);
-            newLi.appendChild(checkbox);
+            newLi.textContent = toDo.title; // adds the toDo's title text next to newLi
 
+            toDoList.appendChild(newLi); // updates the DOM
+            newLi.appendChild(checkbox); // updates the DOM
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            newLi.appendChild(deleteButton);
 
             deleteButton.addEventListener('click', event => {
-                event.preventDefault();
-
-                toDoList.removeChild(newLi) // deletes html elements
-
-                //todos.filter
-                const toRemoveId = toDo.id;
-                const filteredTodos = toDos.filter(toDo => toDo.id !== toRemoveId);
-                todos = filteredTodos; // new array after deletion
-
+                deleteToDo(toDo.id);
+                renderTheUI();
             });
-
         });
-
     }
 
-    addToDoForm.addEventListener('submit', function(event) { 
+    addToDoForm.addEventListener('submit', function(event) {
         event.preventDefault();
         createNewToDo();
         newToDoText = '';
